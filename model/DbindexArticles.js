@@ -18,6 +18,6 @@ const indexArticleSchema = new mongoose.Schema({
   coverLink: String,
 })
 
-const DbTest = mongoose.model('test', tsetSchema, 'test')
+const DbindexArticles = mongoose.model('indexarticles', indexArticleSchema, 'indexarticles')
 
-module.exports = DbTest
+module.exports = DbindexArticles
