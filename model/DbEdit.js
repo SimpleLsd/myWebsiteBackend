@@ -1,12 +1,9 @@
 const mongoose = require('mongoose')
+const options = require('./Options')
 
-mongoose.connect(
-  'mongodb://localhost:27017/indexarticles',
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  (err) => {
-    if (err) { console.error(err); return }
-  }
-)
+mongoose.connect(options.mongodbUrl, options.options, (err) => {
+  if (err) { console.error(err); return }
+})
 
 const indexArticleSchema = new mongoose.Schema({
   num: Number,
@@ -23,4 +20,4 @@ const indexArticleSchema = new mongoose.Schema({
 
 const DbTest = mongoose.model('test', tsetSchema, 'test')
 
-// module.exports = DbTest
+module.exports = DbTest
