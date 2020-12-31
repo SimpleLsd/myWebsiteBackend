@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+  form(action="http://localhost:3000/test/fsupload", method="post" ,enctype="multipart/form-data")
+    input(type="file", name="file", id="file" multiple="multiple")
+    input(type="text", name="text", id="text")
+    input(type="submit", value="提交")
+
+
+
+//- <form action="http://localhost:8080/api/upload" method="post" enctype="multipart/form-data">
+//-     <input type="file" name="file" id="file" value="" multiple="multiple" />
+//-     <input type="submit" value="提交"/>
+//- </form>

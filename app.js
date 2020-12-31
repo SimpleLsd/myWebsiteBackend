@@ -5,9 +5,9 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const koaBody = require('koa-body')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
 const test = require('./routes/test')
 const api = require('./routes/api')
 const edit = require('./routes/edit')
@@ -35,12 +35,19 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+// file upload
+app.use(koaBody({
+  multipart: true,
+  formidable: {
+    maxFileSize: 200 * 1024 * 1024
+  }
+}))
+
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
 app.use(test.routes(), test.allowedMethods())
 app.use(api.routes(), api.allowedMethods())
-app.use(edit.routes(), edit.allowedMethods())
+app.use(edit.routes(), api.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
