@@ -15,6 +15,12 @@ router.get('/', async (ctx, next) => {
   ctx.body = 'success'
 })
 
+router.get('/indexArticlesInsert', async (ctx, next) => {
+  await ctx.render('indexArticlesInsert', {
+    title: 'indexArticlesInsert'
+  })
+})
+
 router.get('/fsupload', async (ctx, next) => {
   await ctx.render('fsupload', {
     title: 'fs upload test'

@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  form(action="/edit/doEdit", method="post")
+    p Number
+    input(type="number", name="number")
+    br
+    p Title
+    input(type="text", name="title")
+    br
+    p Description
+    input(type="text", name="description")
+    br
+    p Abstract
+    input(type="text", name="abstract")
+    br
+    p Cover
+    input(type="file", name="cover")
+    br
+    input(type="submit", name="submit")

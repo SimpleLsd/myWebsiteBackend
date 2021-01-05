@@ -1,8 +1,29 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  color: #001b51;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+input {
+  box-sizing: border-box;
+  outline-style: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+  padding: 6px 12px;
+  margin: 5px 0;
+  font-size: 14px;
+  font-family: 'Microsoft soft';
+}
+
+p {
+  margin: 16px 8px 0 0;
+}
+
+input:focus {
+  border: 1px solid rgb(0, 106, 249);
 }
