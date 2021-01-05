@@ -21,6 +21,34 @@ router.get('/indexArticlesInsert', async (ctx, next) => {
   })
 })
 
+router.post('/indexArticlesInsert', async (ctx, next) => {
+  console.log(1);
+  await ctx.render('index', {
+    title: 'redirect to indexArticlesInsert'
+  })
+  console.log(ctx.request.body);
+  ctx.redirect('back', '/indexArticlesInsert')
+})
+
+/*
+ *
+ *
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ *  
+ */
+
 router.get('/fsupload', async (ctx, next) => {
   await ctx.render('fsupload', {
     title: 'fs upload test'
