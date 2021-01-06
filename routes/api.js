@@ -1,10 +1,10 @@
 const router = require('koa-router')()
 const dateFromat = require('dateformat')
-const DbindexArticles = require('../model/DbindexArticles')
+const DbIndexArticles = require('../model/DbIndexArticles')
 
 router.prefix('/api')
 
-let testDoc = new DbindexArticles({
+let testDoc = new DbIndexArticles({
   num: 1,
   title: 'test title',
   desc: 'test desc',
@@ -19,7 +19,7 @@ router.get('/', async (ctx, next) => {
 })
 
 router.get('/insert', async (ctx, next) => {
-  await DbindexArticles.insertMany(testDoc, (err, docs) => {
+  await DbIndexArticles.insertMany(testDoc, (err, docs) => {
     if (err) { console.error(err); return }
     console.log(docs);
   })

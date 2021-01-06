@@ -10,7 +10,7 @@ const indexArticleSchema = new mongoose.Schema({
   title: String,
   desc: String,
   abstract: String,
-  tags: String,
+  tags: Array,
   date: {
     type: Date,
     default: new Date()
@@ -18,6 +18,6 @@ const indexArticleSchema = new mongoose.Schema({
   coverLink: String,
 })
 
-const DbindexArticles = mongoose.model('indexarticles', indexArticleSchema, 'indexarticles')
+const DbIndexArticles = mongoose.model('indexarticles', indexArticleSchema, 'indexarticles')
 
-module.exports = DbindexArticles
+module.exports = DbIndexArticles

@@ -3,22 +3,48 @@ const path = require('path')
 const router = require('koa-router')()
 const koaBody = require('koa-body');
 const dateFromat = require('dateformat')
-const DbTest = require('../model/DbTest')
+const DbIndexArticles = require('../model/DbIndexArticles')
 
 router.prefix('/edit')
 
 router.get('/', async (ctx, next) => {
-  await DbTest.find({}, (err, docs) => {
-    if (err) { console.error(err); return; }
-    console.log(docs);
-  })
   ctx.body = 'success'
+})
+
+router.get('/indexArticles', async (ctx, next) => {
+  await DbIndexArticles.find({}, async (err, data) => {
+    if (err) { console.error(err); return; }
+    // console.log(docs);
+    await ctx.render('indexArticles', {
+      data: data
+    })
+  })
 })
 
 router.get('/indexArticlesInsert', async (ctx, next) => {
   await ctx.render('indexArticlesInsert', {
     title: 'indexArticlesInsert'
   })
+})
+
+router.get('/indexArticlesInsertManual', async (ctx, next) => {
+  // 
+  let testDoc = new DbIndexArticles({
+    num: 1,
+    title: 'test title new',
+    desc: 'test desc new',
+    abstract: 'test abstract new',
+    tags: ['tag1', 'tag2', 'tag3'],
+    date: new Date(),
+    coverLink: 'http://www.baidu.com'
+  })
+
+  await DbIndexArticles.insertMany(testDoc, (err, docs) => {
+    if (err) { console.error(err); return }
+    console.log(docs);
+  })
+  ctx.body = 'insertOK'
+  ctx.redirect('back', '/edit/indexArticlesInsert')
 })
 
 router.post('/indexArticlesInsert', async (ctx, next) => {
