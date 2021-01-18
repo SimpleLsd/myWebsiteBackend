@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const router = require('koa-router')()
 const koaBody = require('koa-body');
-const dateFromat = require('dateformat')
+const dateFormat = require('dateformat')
 const DbIndexArticles = require('../model/DbIndexArticles')
 
 router.prefix('/edit')
@@ -14,9 +14,22 @@ router.get('/', async (ctx, next) => {
 router.get('/indexArticles', async (ctx, next) => {
   await DbIndexArticles.find({}, async (err, data) => {
     if (err) { console.error(err); return; }
-    // console.log(docs);
-    await ctx.render('indexArticles', {
-      data: data
+    // console.log(dateFormat(item.date, "mmmm dS, yyyy, h:MM:ss TT"));
+    let listData = []
+    for (i = 0; i < data.length; i++) {
+      listData[i] = {}
+      listData[i].num = data[i].num
+      listData[i].title = data[i].title
+      listData[i].desc = data[i].desc
+      listData[i].abstract = data[i].abstract
+      listData[i].coverLink = data[i].coverLink
+      listData[i].tags = data[i].tags
+      listData[i].date = dateFormat(data[i].date, " yyyy, mmmm dS, h:MM:ss TT")
+    }
+    console.log('---');
+    ctx.render('indexArticles', {
+      title: 'indexArticles',
+      data: listData
     })
   })
 })
