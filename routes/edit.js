@@ -12,25 +12,24 @@ router.get('/', async (ctx, next) => {
 })
 
 router.get('/indexArticles', async (ctx, next) => {
-  await DbIndexArticles.find({}, async (err, data) => {
+  let data = await DbIndexArticles.find({}, (err, data) => {
     if (err) { console.error(err); return; }
     // console.log(dateFormat(item.date, "mmmm dS, yyyy, h:MM:ss TT"));
-    let listData = []
-    for (i = 0; i < data.length; i++) {
-      listData[i] = {}
-      listData[i].num = data[i].num
-      listData[i].title = data[i].title
-      listData[i].desc = data[i].desc
-      listData[i].abstract = data[i].abstract
-      listData[i].coverLink = data[i].coverLink
-      listData[i].tags = data[i].tags
-      listData[i].date = dateFormat(data[i].date, " yyyy, mmmm dS, h:MM:ss TT")
-    }
-    console.log('---');
-    ctx.render('indexArticles', {
-      title: 'indexArticles',
-      data: listData
-    })
+  })
+  let listData = []
+  for (i = 0; i < data.length; i++) {
+    listData[i] = {}
+    listData[i].num = data[i].num
+    listData[i].title = data[i].title
+    listData[i].desc = data[i].desc
+    listData[i].abstract = data[i].abstract
+    listData[i].coverLink = data[i].coverLink
+    listData[i].tags = data[i].tags
+    listData[i].date = dateFormat(data[i].date, " yyyy-mm-dd H:MM")
+  }
+  await ctx.render('indexArticles', {
+    title: 'indexArticles',
+    data: listData
   })
 })
 
