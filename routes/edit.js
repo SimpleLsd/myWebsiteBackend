@@ -60,12 +60,24 @@ router.get('/indexArticlesInsertManual', async (ctx, next) => {
 })
 
 router.post('/indexArticlesInsert', async (ctx, next) => {
-  console.log(1);
-  await ctx.render('index', {
-    title: 'redirect to indexArticlesInsert'
+  // console.log(1);
+  newData = ctx.request.body
+  let data = await DbIndexArticles.find({}, (err, data) => {
+    if (err) { console.error(err); return; }
+    // console.log(dateFormat(item.date, "mmmm dS, yyyy, h:MM:ss TT"));
   })
-  console.log(ctx.request.body);
-  ctx.redirect('back', '/indexArticlesInsert')
+  await ctx.render('index', {
+    title: 'redirect to indexArticles'
+  })
+  if (newData.title) {
+    if (!newData.num) {
+      newData.num = data.length + 1
+    }
+    console.log(newData);
+  } else {
+    console.log('data is not complete');
+  }
+  ctx.redirect('back', '/indexArticles')
 })
 
 /*

@@ -22,3 +22,30 @@ block content
           a(href=val.coverLink)
             66
         td= val.tags
+
+    form(action="/edit/indexArticlesInsert", method="post", enctype="multipart/form-data")    
+      tr
+        td now
+        td
+          input(type="number", name="number")
+        td
+          input(type="text", name="title")
+        td
+          input(type="text", name="description")
+        td
+          input(type="text", name="abstract")
+        td
+          input(type="file", name="cover")
+        td
+          span tag1
+            input(type="checkbox", name="tags" value="tag1")
+          span tag2
+            input(type="checkbox", name="tags" value="tag2")
+          span tag3
+            input(type="checkbox", name="tags" value="tag3")
+          span tag4
+            input(type="checkbox", name="tags" value="tag4")
+        td
+          input(type="submit")
+
+
