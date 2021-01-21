@@ -16,25 +16,24 @@ router.get('/', async (ctx, next) => {
 })
 
 router.get('/fsupload', async (ctx, next) => {
+  console.log(process.cwd());
+  console.log('http://180.76.224.216/static/' + 'images/')
   await ctx.render('fsupload', {
     title: 'fs upload test'
   })
 })
 
 router.post('/fsupload', async (ctx, next) => {
-  // ctx.set('Access-Control-Allow-Origin', '*');
-  // ctx.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
-  // ctx.set('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-  // 上传单个文件
-  const file = ctx.request.files.file; // 获取上传文件
-  // 创建可读流
+  const file = ctx.request.files.file;
   const reader = fs.createReadStream(file.path);
-  // let filePath = path.join(process.cwd(), 'public/upload') + `/${file.name}`;
-  // let filePath = '/Users/liusongdi/Desktop/testupload' + `/${file.name}`;
-  let filePath = path.resolve(process.cwd(), '../testupload') + `/${file.name}`;
-  // 创建可写流
+  const extName = file.name.split('.').pop()
+  file.name = '1'
+  console.log(file);
+
+  // let filePath = path.resolve(process.cwd(), '../testupload') + `/${file.name}`;
+  let filePath = path.resolve('/www/wwwroot/static', 'images') + `/${file.name}`;
+  // console.log(filePath);
   const upStream = fs.createWriteStream(filePath);
-  // 可读流通过管道写入可写流
   reader.pipe(upStream);
   return ctx.body = ctx.request.body;
 })
