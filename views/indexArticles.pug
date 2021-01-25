@@ -12,23 +12,27 @@ block content
       th CoverLink
       th Tags
     each val in data
-      tr
-        td= val.date
-        td= val.num
-        td= val.title
-        td= val.desc
-        td= val.abstract
-        //- td= href=val.coverLink
-        td
-          a(href=val.coverLink target="_blank") 
-            img(src=val.coverLink, alt="图片链接失效")
-        td= val.tags
+      form(action="/edit/indexArticlesDelete", method="post" enctype="multipart/form-data")
+        tr
+          td= val.date
+          td= val.num
+          td= val.title
+          td= val.desc
+          td= val.abstract
+          //- td= href=val.coverLink
+          td
+            a(href=val.coverLink target="_blank") 
+              img(src=val.coverLink, alt="图片链接失效")
+          td= val.tags
+          td
+            input(type="hidden", id="id", name="id", value=val.id)
+            input(type="submit", value="删除")
 
     form(action="/edit/indexArticlesInsert", method="post", enctype="multipart/form-data")    
       tr
         td now
         td
-          input(type="number", name="number")
+          input(type="num", name="num")
         td
           input(type="text", name="title")
         td
@@ -47,6 +51,8 @@ block content
           span tag4
             input(type="checkbox", name="tags" value="tag4")
         td
+          input(type="hidden", id="filepath", name="filepath", value="images")
+          input(type="hidden", id="extname", name="extname", value="")
           input(type="submit")
 
 

@@ -14,7 +14,6 @@ router.get('/', async (ctx, next) => {
 router.get('/indexArticles', async (ctx, next) => {
   let data = await DbIndexArticles.find({}, (err, data) => {
     if (err) { console.error(err); return; }
-    // console.log(dateFormat(item.date, "mmmm dS, yyyy, h:MM:ss TT"));
   })
   let listData = []
   for (i = 0; i < data.length; i++) {
@@ -25,6 +24,7 @@ router.get('/indexArticles', async (ctx, next) => {
     listData[i].abstract = data[i].abstract
     listData[i].coverLink = data[i].coverLink
     listData[i].tags = data[i].tags
+    listData[i].id = data[i]._id
     listData[i].date = dateFormat(data[i].date, " yyyy-mm-dd H:MM")
   }
   await ctx.render('indexArticles', {
@@ -53,18 +53,22 @@ router.get('/indexArticlesInsertManual', async (ctx, next) => {
 
   await DbIndexArticles.insertMany(testDoc, (err, docs) => {
     if (err) { console.error(err); return }
-    console.log(docs);
   })
   ctx.body = 'insertOK'
   ctx.redirect('back', '/edit/indexArticlesInsert')
 })
 
 router.post('/indexArticlesInsert', async (ctx, next) => {
-  // console.log(1);
-  newData = ctx.request.body
+  const theFilePath = ctx.request.body.filepath
+  const file = ctx.request.files.cover;
+  const reader = fs.createReadStream(file.path);
+  let extName = ctx.request.body.extname
+  let newData = ctx.request.body
+
+  extName = file.name.split('.').pop()
+
   let data = await DbIndexArticles.find({}, (err, data) => {
     if (err) { console.error(err); return; }
-    // console.log(dateFormat(item.date, "mmmm dS, yyyy, h:MM:ss TT"));
   })
   await ctx.render('index', {
     title: 'redirect to indexArticles'
@@ -73,10 +77,34 @@ router.post('/indexArticlesInsert', async (ctx, next) => {
     if (!newData.num) {
       newData.num = data.length + 1
     }
-    console.log(newData);
   } else {
     console.log('data is not complete');
   }
+
+  file.name = new Date().getTime() + '.' + extName
+  let filePath = path.resolve('/www/wwwroot/static', theFilePath) + `/${file.name}`;
+  const upStream = fs.createWriteStream(filePath);
+  reader.pipe(upStream);
+
+  newData.date = new Date()
+  newData.coverLink = 'http://180.76.224.216/static/' + newData.filepath + `/${file.name}`
+
+  delete newData.extname
+  delete newData.filepath
+
+  await DbIndexArticles.insertMany(newData, (err, docs) => {
+    if (err) { console.error(err); return }
+  })
+
+  ctx.redirect('back', '/indexArticles')
+})
+
+router.post('/indexArticlesDelete', async (ctx, next) => {
+  const itemId = ctx.request.body.id
+
+  await DbIndexArticles.deleteOne({ _id: itemId }, (err, data) => {
+    if (err) { console.error(err); return; }
+  })
   ctx.redirect('back', '/indexArticles')
 })
 
