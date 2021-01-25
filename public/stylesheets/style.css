@@ -55,6 +55,7 @@ input:focus {
 table {
   border-collapse: collapse;
   text-align: left;
+  word-wrap: break-word;
 }
 
 th {
@@ -67,5 +68,8 @@ td {
   height: 48px;
   padding-right: 20px;
   max-width: 200px;
-  min-width: 60px;
+}
+
+td img {
+  height: 100px;
 }

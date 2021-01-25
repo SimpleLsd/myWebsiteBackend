@@ -18,9 +18,10 @@ block content
         td= val.title
         td= val.desc
         td= val.abstract
+        //- td= href=val.coverLink
         td
-          a(href=val.coverLink)
-            66
+          a(href=val.coverLink target="_blank") 
+            img(src=val.coverLink, alt="图片链接失效")
         td= val.tags
 
     form(action="/edit/indexArticlesInsert", method="post", enctype="multipart/form-data")    
