@@ -20,7 +20,7 @@ router.get('/indexArticles', async (ctx, next) => {
     listData[i] = {}
     listData[i].num = data[i].num
     listData[i].title = data[i].title
-    listData[i].desc = data[i].desc
+    listData[i].desc = data[i].description
     listData[i].abstract = data[i].abstract
     listData[i].coverLink = data[i].coverLink
     listData[i].tags = data[i].tags
@@ -91,6 +91,8 @@ router.post('/indexArticlesInsert', async (ctx, next) => {
 
   delete newData.extname
   delete newData.filepath
+
+  console.log(newData);
 
   await DbIndexArticles.insertMany(newData, (err, docs) => {
     if (err) { console.error(err); return }

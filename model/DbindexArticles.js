@@ -8,7 +8,7 @@ mongoose.connect(options.mongodbUrl, options.options, (err) => {
 const indexArticleSchema = new mongoose.Schema({
   num: Number,
   title: String,
-  desc: String,
+  description: String,
   abstract: String,
   tags: Array,
   date: {

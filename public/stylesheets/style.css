@@ -20,7 +20,8 @@ input {
   font-family: 'Microsoft soft';
 }
 
-table input {
+table input,
+textarea {
   box-sizing: border-box;
   outline-style: none;
   border: 1px solid #ccc;
